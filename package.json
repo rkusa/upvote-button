@@ -1,0 +1,16 @@
+{
+  "name": "upvote-button",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gcloud beta functions deploy votes --stage-bucket serverless-votes --trigger-http",
+    "vote": "curl http://localhost:8010/web-component-backends/us-central1/votes/1 -X POST",
+    "unvote": "curl http://localhost:8010/web-component-backends/us-central1/votes/1 -X DELETE"
+  },
+  "author": "Markus Ast <m@rkusa.st>",
+  "dependencies": {
+    "@google-cloud/datastore": "^1.1.0",
+    "express": "^4.15.4"
+  }
+}

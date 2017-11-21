@@ -5,6 +5,10 @@ const datastore = Datastore()
 const express = require('express')
 const app = express();
 
+app.head('/:uid', function(req, res) {
+    res.sendStatus(200)
+})
+
 app.get('/:uid', function(req, res) {
     const voteKey = datastore.key(['vote', req.params.uid])
     const ipKey = datastore.key(['vote', req.params.uid, 'ip', req.ip])
@@ -25,7 +29,6 @@ app.get('/:uid', function(req, res) {
 
         })
         .catch(err => {
-            transaction.rollback()
             console.log('Error:', err)
             res.sendStatus(500)
         })

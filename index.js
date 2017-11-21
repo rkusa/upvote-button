@@ -3,9 +3,9 @@
 const Datastore = require('@google-cloud/datastore')
 const datastore = Datastore()
 const express = require('express')
-const router = new express.Router()
+const app = express();
 
-router.get('/:uid', function(req, res) {
+app.get('/:uid', function(req, res) {
     const voteKey = datastore.key(['vote', req.params.uid])
     const ipKey = datastore.key(['vote', req.params.uid, 'ip', req.ip])
 
@@ -31,13 +31,13 @@ router.get('/:uid', function(req, res) {
         })
 })
 
-router.post('/:uid', function(req, res) {
+app.post('/:uid', function(req, res) {
     const transaction = datastore.transaction()
 
     const voteKey = datastore.key(['vote', req.params.uid])
     const ipKey = datastore.key(['vote', req.params.uid, 'ip', req.ip])
 
-    transaction.run()
+    return transaction.run()
         .then(() => Promise.all([
             transaction.get(voteKey),
             transaction.get(ipKey)
@@ -68,13 +68,13 @@ router.post('/:uid', function(req, res) {
         })
 })
 
-router.delete('/:uid', function(req, res) {
+app.delete('/:uid', function(req, res) {
     const transaction = datastore.transaction()
 
     const voteKey = datastore.key(['vote', req.params.uid])
     const ipKey = datastore.key(['vote', req.params.uid, 'ip', req.ip])
 
-    transaction.run()
+    return transaction.run()
         .then(() => Promise.all([
             transaction.get(voteKey),
             transaction.get(ipKey)
@@ -114,5 +114,5 @@ exports.index = function(req, res) {
     res.set('Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE')
 
     // handle request
-    return router(req, res)
+    return app.handle(req, res)
 }

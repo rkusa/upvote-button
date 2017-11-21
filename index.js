@@ -111,4 +111,4 @@ app.delete('/:uid', function(req, res) {
         })
 })
 
-exports.index = app.handle
+exports.index = app.handle.bind(app)

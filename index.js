@@ -108,7 +108,7 @@ router.delete('/:uid', function(req, res) {
         })
 })
 
-exports.votes = function(req, res) {
+exports.index = function(req, res) {
     // enable cors
     res.set('Access-Control-Allow-Origin', '*')
     res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE')

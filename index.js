@@ -111,11 +111,4 @@ app.delete('/:uid', function(req, res) {
         })
 })
 
-exports.index = function(req, res) {
-    // enable cors
-    res.set('Access-Control-Allow-Origin', '*')
-    res.set('Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE')
-
-    // handle request
-    return app.handle(req, res)
-}
+exports.index = app.handle
